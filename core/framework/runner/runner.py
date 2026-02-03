@@ -67,7 +67,9 @@ def load_agent_export(data: str | dict) -> tuple[GraphSpec, Goal]:
         Tuple of (GraphSpec, Goal)
     """
     if isinstance(data, str):
-        data = json.loads(data)
+        from framework.utils import extract_json
+        # Use utility for robust parsing (handles markdown blocks, etc.)
+        data = extract_json(data, ["graph", "goal"])
 
     # Extract graph and goal
     graph_data = data.get("graph", {})
